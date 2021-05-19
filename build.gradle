@@ -44,7 +44,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = 'https://github.com/team-carepay/sonar-qualitygate-plugin'
-    vcsUrl = 'https://github.com/team-carepay/sonar-qualitygate-plugin'
+    website = 'https://github.com/team-carepay/sonar-qualitygate'
+    vcsUrl = 'https://github.com/team-carepay/sonar-qualitygate.git'
     tags = ['sonar', 'sonarcloud', 'sonarqube']     
 }
