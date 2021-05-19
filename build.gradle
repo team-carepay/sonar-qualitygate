@@ -1,0 +1,50 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'maven-publish'                                
+    id 'com.gradle.plugin-publish' version '0.14.0'   
+}
+
+group = 'com.carepay'
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(
+            'com.github.cliftonlabs:json-simple:3.1.1',
+    )
+
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.7.0',
+            'org.assertj:assertj-core:3.18.1',
+            'org.mockito:mockito-core:3.7.0',
+    )
+    testRuntimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine:5.7.0',
+    )
+}
+
+gradlePlugin {
+    plugins {
+        sonarQualityGate {
+            id = 'com.carepay.sonar-qualitygate'
+            implementationClass = 'com.carepay.sonar.qualitygate.SonarQualityGatePlugin'
+            displayName = 'Sonar QualiyGate Plugin'
+            description = 'Waits for Sonarqube scanning to complete, then optionally fails the build if the Sonar qualitygate fails'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/team-carepay/sonar-qualitygate-plugin'
+    vcsUrl = 'https://github.com/team-carepay/sonar-qualitygate-plugin'
+    tags = ['sonar', 'sonarcloud', 'sonarqube']     
+}
