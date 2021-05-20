@@ -16,6 +16,9 @@ import org.gradle.api.Task;
 public class SonarQualityGateCheckAction implements Action<Task> {
     private static final int NR_OF_RETRIES = 30;
     private static final long WAIT_TIME_MILLIS = 5000L;
+    private static final String CE_TASK_URL_PROPERTY = "ceTaskUrl";
+    private static final String PROJECT_STATUS_URL = "https://sonarcloud.io/api/qualitygates/project_status?analysisId=";
+    private static final String SUCCESS_STATUS = "SUCCESS";
 
     private final ResourceFetcher resourceFetcher;
 
@@ -29,6 +32,7 @@ public class SonarQualityGateCheckAction implements Action<Task> {
 
     @Override
     public void execute(Task task) {
+        @SuppressWarnings("unchecked")
         final Map<String, Object> properties = (Map<String, Object>) task.getInputs().getProperties().get("properties");
         if (properties == null) {
             throw new IllegalStateException("Sonarqube task properties missing");
@@ -36,7 +40,7 @@ public class SonarQualityGateCheckAction implements Action<Task> {
         final String token = String.valueOf(properties.get("sonar.login"));
         task.getLogger().info("checking quality gate");
         final Properties props = getTaskProperties(new File(task.getProject().getBuildDir(), "sonar/report-task.txt"));
-        final String analysisId = waitForAnalysisId(props.getProperty("ceTaskUrl"), token);
+        final String analysisId = waitForAnalysisId(props.getProperty(CE_TASK_URL_PROPERTY), token);
         task.getLogger().info("analysis id {}", analysisId);
         final String status = getQualityGateStatus(analysisId, token);
         task.getLogger().info("quality gate project status is {}", status);
@@ -59,7 +63,7 @@ public class SonarQualityGateCheckAction implements Action<Task> {
     }
 
     protected String getQualityGateStatus(final String analysisId, final String sonarToken) {
-        final URL url = URLOpener.create("https://sonarcloud.io/api/qualitygates/project_status?analysisId=" + analysisId);
+        final URL url = URLOpener.create(PROJECT_STATUS_URL + analysisId);
         final JsonObject responseJson = resourceFetcher.queryJsonBasicAuth(url, sonarToken, "");
         final JsonObject statusJson = responseJson.getMap(ProjectStatusJsonProperty.projectStatus);
         if (statusJson == null) {
@@ -77,7 +81,7 @@ public class SonarQualityGateCheckAction implements Action<Task> {
                 if (taskJson == null) {
                     throw new IllegalStateException("Invalid JSON response: missing 'task'");
                 }
-                if (!"SUCCESS".equals(taskJson.getString(TaskJsonProperty.status))) {
+                if (!SUCCESS_STATUS.equals(taskJson.getString(TaskJsonProperty.status))) {
                     Thread.sleep(WAIT_TIME_MILLIS);
                 } else {
                     return taskJson.getString(TaskJsonProperty.analysisId);
