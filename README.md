@@ -1,3 +1,8 @@
+[![Build](https://github.com/team-carepay/sonar-qualitygate/workflows/build/badge.svg)](https://github.com/team-carepay/sonar-qualitygate/actions/workflows/build.yml)
+[![Release](https://github.com/team-carepay/sonar-qualitygate/workflows/release/badge.svg)](https://github.com/team-carepay/sonar-qualitygate/actions/workflows/release.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Version](https://badge.fury.io/gh/team-carepay%2Fsonar-qualitygate.svg)](https://github.com/team-carepay/sonar-qualitygate/releases)
+
 # sonar-qualitygate
 Gradle plugin to verify Sonar quality-gate outcome
 
@@ -5,7 +10,7 @@ Gradle plugin to verify Sonar quality-gate outcome
 ```groovy
 plugins {
     id 'org.sonarqube' version '3.2.0'
-    id 'com.carepay.sonar-qualitygate' version '0.0.3'
+    id 'com.carepay.sonar-qualitygate' version '0.0.5'
 }
 ```
 

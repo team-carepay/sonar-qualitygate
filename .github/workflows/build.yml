@@ -1,9 +1,7 @@
-name: ci
+name: build
 
 on:
   push:
-    branches-ignore:
-    - main
 
 jobs:
   build:
