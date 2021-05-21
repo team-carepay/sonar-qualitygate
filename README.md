@@ -5,7 +5,7 @@ Gradle plugin to verify Sonar quality-gate outcome
 ```groovy
 plugins {
     id 'org.sonarqube' version '3.2.0'
-    id 'com.carepay.sonar-qualitygate' version '0.0.2'
+    id 'com.carepay.sonar-qualitygate' version '0.0.3'
 }
 ```
 
