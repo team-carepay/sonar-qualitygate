@@ -57,6 +57,7 @@ public class SonarQualityGateCheckAction implements Action<Task> {
         final String status = getQualityGateStatus(analysisUrl, login, password);
         task.getLogger().info("quality gate project status is {}", status);
         if (!"OK".equals(status)) {
+            task.getLogger().error("Quality gate failed, check {}", props.get("dashboardUrl"));
             throw new IllegalStateException("Quality gate failed: " + status);
         }
     }
