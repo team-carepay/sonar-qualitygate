@@ -1,0 +1,7 @@
+organization=carepay-bitbucket
+projectKey=com.carepay:limit
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.20206
+dashboardUrl=https://sonarcloud.io/dashboard?id=com.carepay%3Alimit
+ceTaskId=AXmHBwTu2SYq9eoiyJWZ
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXmHBwTu2SYq9eoiyJWZ

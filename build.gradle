@@ -1,7 +1,8 @@
 plugins {
     id 'java-gradle-plugin'
     id 'maven-publish'                                
-    id 'com.gradle.plugin-publish' version '0.14.0'   
+    id 'com.gradle.plugin-publish' version '0.14.0'
+    id 'net.researchgate.release' version '2.8.1'
 }
 
 group = 'com.carepay'
@@ -32,6 +33,10 @@ dependencies {
     )
 }
 
+test {
+    useJUnitPlatform()
+}
+
 gradlePlugin {
     plugins {
         sonarQualityGate {
@@ -47,4 +52,12 @@ pluginBundle {
     website = 'https://github.com/team-carepay/sonar-qualitygate'
     vcsUrl = 'https://github.com/team-carepay/sonar-qualitygate.git'
     tags = ['sonar', 'sonarcloud', 'sonarqube']     
+}
+
+release {
+    tagCommitMessage = 'Release tag [skip ci]'
+    newVersionCommitMessage = 'New version [skip ci]'
+    git {
+        requireBranch = '' // allow release from any branch
+    }
 }
